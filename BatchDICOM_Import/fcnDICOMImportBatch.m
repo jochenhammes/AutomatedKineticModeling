@@ -1,4 +1,4 @@
-function runWithSuccess = fcnDICOMImportBatch(pathInputFolder, FilenameProperties, pathOutputFolder)
+function runWithSuccess = fcnDICOMImportBatch(pathInputFolder, pathOutputFolder, FilenameProperties)
 
 %   TODO
 %   []  Change WorkingDirectory to a dynamic path
