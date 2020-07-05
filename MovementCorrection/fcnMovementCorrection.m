@@ -1,26 +1,20 @@
-function runWithSuccess = fcnDICOMImportBatch(pathInputFolder, pathOutputFolder, FilenameProperties)
-
-%   TODO
-%   []  Change WorkingDirectory to a dynamic path
-%   []	Filenameprooerties anpassen
+function runWithSuccess = fcnMovementCorrection(pathInputFolder)
 
 runWithSuccess = false;
 
-%pathInputFolder = '/Volumes/MMNI_RAID/RAID_MMNI/AphasicPatients/DICOM/TV/';
-%pathOutputFolder = pathInputFolder;
-pathOutputFolder = '/DATA/hammesj/Scripts/AutomatedKineticModeling/BatchDICOM_Import/workdir';
-
-
 %Job file for DICOM Import
 
-%Select Files to be normalized, run recursively through all subfolders with **
 clear subj;
-FilenameProperties = '**';
+FilenameProperties = '*.nii';
 subj = dir([pathInputFolder FilenameProperties]);
 
 %remove linux folder-dots .. .
 subj(strcmp({subj.name}, '..')) = [];
 subj(strcmp({subj.name}, '.')) = [];
+
+%remove fiels with certain Prefixes
+subj(startsWith({subj.name},'movCor_')) = [];
+subj(startsWith({subj.name},'mean')) = [];
 
 %prepare inputFileList
 inputFileList = '';
@@ -32,18 +26,15 @@ end
 fprintf(inputFileList);
 
 
-fin = fopen('DICOMImportBatch_job.m', 'r');
-fout = fopen('DICOMImportBatch_jobINTERMEDIATE.m', 'w');
+fin = fopen('MovCor_job.m', 'r');
+fout = fopen('MovCor_job_INTERMEDIATE.m', 'w');
 
 findstr1 = 'LIST_OF_INPUT_FILES';
 replacestr1 = inputFileList;
-findstr2 = 'PATH_TO_OUTPUT_FOLDER';
-replacestr2 = pathOutputFolder;
 
 while ~feof(fin)
     s = fgetl(fin);
     s = strrep(s, findstr1, replacestr1);
-    s = strrep(s, findstr2, replacestr2);
     
     fprintf(fout,'%s\n',s)
 end
@@ -51,7 +42,7 @@ end
 fclose(fin)
 fclose(fout)
 
- jobfile = {'DICOMImportBatch_jobINTERMEDIATE.m'};
+ jobfile = {'MovCor_job_INTERMEDIATE.m'};
  spm('defaults', 'PET');
  
  %Open SPM GUI
