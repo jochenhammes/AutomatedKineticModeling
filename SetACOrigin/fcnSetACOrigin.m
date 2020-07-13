@@ -2,12 +2,13 @@ function runWithSuccess = fcnSetACOrigin(pathInputFolder, pathOutputFolder, File
 
 runWithSuccess = false;
 
-pathInputFolder = '/DATA/hammesj/Scripts/AutomatedKineticModeling/SetACOrigin/newtest/';
-pathOutputFolder = '/DATA/hammesj/Scripts/AutomatedKineticModeling/SetACOrigin/workdir/';
+%pathInputFolder = '/DATA/hammesj/Scripts/AutomatedKineticModeling/SetACOrigin/newtest/';
+%pathOutputFolder = '/DATA/hammesj/Scripts/AutomatedKineticModeling/SetACOrigin/workdir/';
+pathOutputFolder = pathInputFolder;
 
 %Select Files to be normalized, run recursively through all subfolders with **
 clear subj;
-FilenameProperties = '*.nii';
+FilenameProperties = '4D*.nii';
 subj = dir([pathInputFolder FilenameProperties]);
 
 % load sample headers for PET and CT

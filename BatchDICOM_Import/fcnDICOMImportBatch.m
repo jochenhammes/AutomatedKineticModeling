@@ -6,9 +6,9 @@ function runWithSuccess = fcnDICOMImportBatch(pathInputFolder, pathOutputFolder,
 
 runWithSuccess = false;
 
-%pathInputFolder = '/Volumes/MMNI_RAID/RAID_MMNI/AphasicPatients/DICOM/TV/';
-%pathOutputFolder = pathInputFolder;
-pathOutputFolder = '/DATA/hammesj/Scripts/AutomatedKineticModeling/BatchDICOM_Import/workdir';
+%pathInputFolder = '/DATA/hammesj/PI2620_KinMod/Simsek/Simsek/PI2620_fulldyn/';
+pathOutputFolder = pathInputFolder;
+%pathOutputFolder = '/DATA/hammesj/Scripts/AutomatedKineticModeling/BatchDICOM_Import/workdir';
 
 
 %Job file for DICOM Import
