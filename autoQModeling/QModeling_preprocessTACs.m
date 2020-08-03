@@ -189,7 +189,7 @@ pause(0.001);
             error('ERROR Writing results in file');
         end    
     
-    %{    
+        
     elseif strcmp(model,'SRTM2') == 1
         
         disp('Model selected: SRTM2')
@@ -279,7 +279,7 @@ pause(0.001);
             fprintf(QMf_logfile,strcat('  ERROR: Writing results in file','\n'));
             error('ERROR Writing results in file');
         end
-    %}
+    
         
     elseif strcmp(model,'PatlakRef') == 1
         

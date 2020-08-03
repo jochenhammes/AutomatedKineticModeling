@@ -125,7 +125,7 @@ function results = QModeling_SRTM2(Ct,Cr,times,k2_p,k2a_min,k2a_max,basisF,resam
        
             % Goodness of fit
             % MSE=mean((Ct-Ct_estimate').^2);
-            NMSE =1-((Ct-Ct_estimate).^2)./((Ct-mean(Ct)).^2);
+            NMSE =1-((Ct-Ct_estimate').^2)./((Ct-mean(Ct)).^2);
             CCoef=corrcoef(Ct,Ct_estimate');
     end  
 
