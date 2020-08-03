@@ -45,28 +45,28 @@ function autoQModelingCGN()
 
 actualpath=mfilename('fullpath'); 
 [path, ~, ~]=fileparts(actualpath);
-demo=strcat(path,filesep,'demo',filesep);
+workdir=strcat(path,filesep,'workdir',filesep);
 
 % you can change these paths to your own ones
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-studies_path=strcat(demo,'studies');
-reference_path=strcat(demo,'reference_masks');
-interest_path=strcat(demo,'interest_masks');
-results_path=strcat(demo,'results');
+studies_path=strcat(workdir,'studies');
+reference_path=strcat(workdir,'reference_masks');
+interest_path=strcat(workdir,'interest_masks');
+results_path=strcat(workdir,'results');
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %times=strcat(fileparts(path),filesep,'TimeTable.txt');
-times=strcat(path, filesep, 'TimeTable.txt');
+times=strcat(path, filesep, 'TimeTable_fulldynMunich.txt');
 
 %% STEP 1: TACs generation
 disp('STEP 1: TACs generation');
 % from the studies and the reference and interest masks, the following function will
 % return the TACs in a .txt called "tacs"
 QModeling_generateTACs(studies_path,reference_path,interest_path,results_path,times);
- TACsfile=strcat(demo,'results',filesep,'tacs.txt');
+ TACsfile=strcat(workdir,'results',filesep,'tacs.txt');
 
 disp('TACs generation done. Press any key to continue');
-pause();
+%pause();
 
 %% STEP 2: Preprocessing reference model
 disp('STEP 2: Preprocessing SRTM');
@@ -84,7 +84,7 @@ parameters=[k2a_min k2a_max num_basis_functions resampling];
 QModeling_preprocessTACs(TACsfile,times,results_path,model,parameters);
 
 disp('Preprocessing SRTM method done. Press any key to continue');
-pause();
+%pause();
 
 disp('STEP 2: Preprocessing SRTM2');
 model='SRTM2';
@@ -105,7 +105,7 @@ parameters=[k2a_min k2a_max num_basis_functions resampling k2_p]; % giving a spe
 % The following function adjust the model to the interest region
 QModeling_preprocessTACs(TACsfile,times,results_path,model,parameters);
 disp('Preprocessing SRTM2 method done. Press any key to continue');
-pause();
+%pause();
 
 disp('STEP 2: Preprocessing PatlakRef');
 model='PatlakRef';
@@ -125,7 +125,8 @@ parameters=[restrict_t_min restrict_t_max MaxError];
 QModeling_preprocessTACs(TACsfile,times,results_path,model,parameters);
 
 disp('Preprocessing Patlak Ref method done. Press any key to continue');
-pause();
+%pause();
+
 %% STEP 3: Parametric images
 disp('STEP 3: Parametric images (SRTM)');
 model='SRTM';
@@ -144,7 +145,7 @@ parameters=[k2a_min k2a_max num_basis_functions resampling threshold];
 QModeling_parametric_images(studies_path,reference_path,interest_path,results_path,model,parameters,times)
 
 disp('Parametric images for SRTM method generated. Press any key to continue');
-pause();
+%pause();
 
 disp('STEP 3: Parametric images (SRTM2)');
 model='SRTM2';
@@ -168,7 +169,7 @@ parameters=[k2a_min k2a_max num_basis_functions resampling k2_p threshold];
 QModeling_parametric_images(studies_path,reference_path,interest_path,results_path,model,parameters,times)
 
 disp('Parametric images for SRTM2 method generated. Press any key to continue');
-pause();
+%pause();
 
 disp('STEP 3: Parametric images (PatlakRef)');
 model='PatlakRef';
@@ -190,5 +191,5 @@ parameters=[restrict_t_min restrict_t_max MaxError threshold];
 QModeling_parametric_images(studies_path,reference_path,interest_path,results_path,model,parameters,times)
 
 disp('Parametric images for PatlakRef method generated');
-disp('End demoQModeling');
+disp('End QModeling');
 end
