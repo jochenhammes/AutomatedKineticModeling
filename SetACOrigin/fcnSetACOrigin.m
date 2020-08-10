@@ -38,5 +38,6 @@ for i=1:length(subj)
     
 end
 
+runWithSuccess = true;
 
 end

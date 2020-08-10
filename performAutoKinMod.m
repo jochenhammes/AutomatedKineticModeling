@@ -44,9 +44,30 @@ end
 %% Step 2: Movement Correction
 
 addpath('MovementCorrection/');
-fcnMovementCorrection([pathInputFolder 'workdir/']);
+fcnMovementCorrection([pathInputFolder 'workdir' filesep]);
 
 rmpath('MovementCorrection/');
+
+%% Step 3: convert to 4D Nifti
+
+addpath('ConvertTo4D/');
+conversion4DSuccessful = fcnConvert4D([pathInputFolder 'workdir' filesep], 'movCor_*.nii');
+
+if conversion4DSuccessful
+    % delete non4D files
+    delete([pathInputFolder 'workdir' filesep '4D*.mat']);
+    delete([pathInputFolder 'workdir' filesep 'movCor_*.nii']);
+end
+
+rmpath('ConvertTo4D/');
+
+%% Step 4: SetAC origin
+
+addpath('SetACOrigin/');
+
+fcnSetACOrigin([pathInputFolder 'workdir' filesep], [pathInputFolder 'workdir' filesep], '4D*.nii');
+
+rmpath('SetACOrigin/');
 
 end
 
