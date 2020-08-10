@@ -6,7 +6,7 @@ runWithSuccess = false;
 
 perfusionFramesToBeSummed = [2 5];
 
-pathInputFolder = '/DATA/hammesj/Scripts/AutomatedKineticModeling/SetACOrigin/workdir/';
+%pathInputFolder = '/DATA/hammesj/Scripts/AutomatedKineticModeling/SetACOrigin/workdir/';
 pathOutputFolder = pathInputFolder;
 
 %Select Files to be normalized
