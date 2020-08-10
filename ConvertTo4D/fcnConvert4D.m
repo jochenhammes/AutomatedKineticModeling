@@ -44,17 +44,17 @@ fclose(fout)
  jobfile = {'Convert4D_job_INTERMEDIATE.m'};
  spm('defaults', 'PET');
  
- %Open SPM GUI
- spm
+%  %Open SPM GUI
+%  spm
  
  %Run job
  spm_jobman('serial', jobfile);
  
- %Close SPM GUI again
- myfigures = get(groot,'children'); % Save handles of SPM windows
- handleOfMenu = find(endsWith({myfigures.Name},'Menu'));
- close(myfigures(handleOfMenu));
- 
+%  %Close SPM GUI again
+%  myfigures = get(groot,'children'); % Save handles of SPM windows
+%  handleOfMenu = find(endsWith({myfigures.Name},'Menu'));
+%  close(myfigures(handleOfMenu));
+%  
  %if ~isempty(subj) > 0
     runWithSuccess = true;
  %end
