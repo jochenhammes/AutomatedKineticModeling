@@ -1,4 +1,9 @@
-function outputArg1 = performAutoKinMod(pathInputFolder,keepTempfiles,pathNormalDB)
+function outputArg1 = performAutoKinMod(pathInputFolder, app, keepTempfiles,pathNormalDB)
+
+try
+app.ProtocolTextArea.Value = [{'processing started'}, app.ProtocolTextArea.Value(:)'];
+end
+
 
 %% Step 0: Create Workdir
 
