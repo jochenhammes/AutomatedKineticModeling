@@ -10,6 +10,10 @@ runWithSuccess = false;
 pathOutputFolder = pathInputFolder;
 %pathOutputFolder = '/DATA/hammesj/Scripts/AutomatedKineticModeling/BatchDICOM_Import/workdir';
 
+%Append filesep to path, if missing
+if ~strcmp(pathInputFolder(end), filesep)
+    pathInputFolder = [pathInputFolder filesep];
+end
 
 %Job file for DICOM Import
 

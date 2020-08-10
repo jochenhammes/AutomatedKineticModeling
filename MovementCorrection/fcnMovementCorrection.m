@@ -12,7 +12,10 @@ subj = dir([pathInputFolder FilenameProperties]);
 subj(strcmp({subj.name}, '..')) = [];
 subj(strcmp({subj.name}, '.')) = [];
 
-%remove fiels with certain Prefixes
+%remove CT niftis, i.e. niftis that have a filesize > 55000000 bytes
+subj([subj.bytes] > 55000000) = [];
+
+%remove files with certain Prefixes
 subj(startsWith({subj.name},'movCor_')) = [];
 subj(startsWith({subj.name},'mean')) = [];
 
