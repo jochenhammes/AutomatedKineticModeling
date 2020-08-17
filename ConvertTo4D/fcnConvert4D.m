@@ -1,4 +1,4 @@
-function runWithSuccess = fcnConvert4D(pathInputFolder, FilenameProperties)
+function runWithSuccess = fcnConvert4D(pathInputFolder, FilenameProperties, noGUI)
 
 runWithSuccess = false;
 
@@ -44,17 +44,21 @@ fclose(fout)
  jobfile = {'Convert4D_job_INTERMEDIATE.m'};
  spm('defaults', 'PET');
  
-%  %Open SPM GUI
-%  spm
+%Open SPM GUI
+if ~exist('noGUI')
+    spm
+end
  
  %Run job
  spm_jobman('serial', jobfile);
  
-%  %Close SPM GUI again
-%  myfigures = get(groot,'children'); % Save handles of SPM windows
-%  handleOfMenu = find(endsWith({myfigures.Name},'Menu'));
-%  close(myfigures(handleOfMenu));
-%  
+%Close SPM GUI again
+if ~exist('noGUI')
+    myfigures = get(groot,'children'); % Save handles of SPM windows
+    handleOfMenu = find(endsWith({myfigures.Name},'Menu'));
+    close(myfigures(handleOfMenu));
+end
+
  %if ~isempty(subj) > 0
     runWithSuccess = true;
  %end

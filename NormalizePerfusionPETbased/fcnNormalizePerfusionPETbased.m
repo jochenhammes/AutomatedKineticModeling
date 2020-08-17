@@ -1,4 +1,4 @@
-function runWithSuccess = fcnNormalizePerfusionPETbased(pathInputFolder)
+function runWithSuccess = fcnNormalizePerfusionPETbased(pathInputFolder, noGUI)
 % This function performes an automated template based normalization of a 4D
 % dynmic PET series
 
@@ -14,7 +14,7 @@ clear subj;
 FilenameProperties = 'ACOrig_4D*.nii';
 subj = dir([pathInputFolder FilenameProperties]);
 
-% load niftis, 
+% load niftis,
 % header and save back files
 for i=1:length(subj)
     myCurrentNifti = load_untouch_nii([subj(i).folder filesep subj(i).name]);
@@ -76,18 +76,21 @@ for i=1:length(subj)
     jobfile = {'normalizePerfusionBased_batch_INTERMEDIATE.m'};
     spm('defaults', 'PET');
     
-%     %Open SPM GUI
-%     spm
+    %Open SPM GUI
+    if ~exist('noGUI')
+        spm
+    end
     
     %Run job
     spm_jobman('serial', jobfile);
     
-%     %Close SPM GUI again
-%     myfigures = get(groot,'children'); % Save handles of SPM windows
-%     handleOfMenu = find(endsWith({myfigures.Name},'Menu'));
-%     close(myfigures(handleOfMenu));
+    %Close SPM GUI again
+    if ~exist('noGUI')
+        myfigures = get(groot,'children'); % Save handles of SPM windows
+        handleOfMenu = find(endsWith({myfigures.Name},'Menu'));
+        close(myfigures(handleOfMenu));
+    end
     
-   
 end
 
 

@@ -38,7 +38,12 @@ foldersForInput(strcmp({foldersForInput.name}, 'workdir')) = [];
 foldersForInput = foldersForInput([foldersForInput(:).isdir]);
 
 for i=1:length(foldersForInput)
-    fcnDICOMImportBatch([pathInputFolder foldersForInput(i).name], [pathInputFolder foldersForInput(i).name], '');
+    fcnDICOMImportBatch([pathInputFolder foldersForInput(i).name], [pathInputFolder foldersForInput(i).name], '','noGUI');
+end
+
+%remove intermediate file from DICOM import
+try
+    delete('DICOMImportBatch_jobINTERMEDIATE.m')
 end
 
 rmpath('BatchDICOM_Import/');
@@ -60,9 +65,14 @@ try
 end
 
 addpath('MovementCorrection/');
-fcnMovementCorrection([pathInputFolder 'workdir' filesep]);
+fcnMovementCorrection([pathInputFolder 'workdir' filesep], 'noGUI');
 
 rmpath('MovementCorrection/');
+
+%remove intermediate file from Movement Correction
+try
+    delete('MovCor_job_INTERMEDIATE.m')
+end
 
 %% Step 3: convert to 4D Nifti
 
@@ -71,7 +81,7 @@ try
 end
 
 addpath('ConvertTo4D/');
-conversion4DSuccessful = fcnConvert4D([pathInputFolder 'workdir' filesep], 'movCor_*.nii');
+conversion4DSuccessful = fcnConvert4D([pathInputFolder 'workdir' filesep], 'movCor_*.nii', 'noGUI');
 
 if conversion4DSuccessful
     % delete non4D files
@@ -80,6 +90,11 @@ if conversion4DSuccessful
 end
 
 rmpath('ConvertTo4D/');
+
+%remove intermediate file from 4D Conversion 
+try
+    delete('Convert4D_job_INTERMEDIATE.m')
+end
 
 %% Step 4: SetAC origin
 
@@ -102,9 +117,14 @@ end
 
 addpath('NormalizePerfusionPETbased/');
 
-fcnNormalizePerfusionPETbased([pathInputFolder 'workdir' filesep]);
+fcnNormalizePerfusionPETbased([pathInputFolder 'workdir' filesep], 'noGUI');
 
 rmpath('NormalizePerfusionPETbased/');
+
+%remove intermediate file from spatial normalization
+try
+    delete('normalizePerfusionBased_batch_INTERMEDIATE.m')
+end
 
 %% Step 6: Run qmodeling with the Normalized Dataset to
 

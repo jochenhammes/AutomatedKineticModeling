@@ -1,4 +1,4 @@
-function runWithSuccess = fcnDICOMImportBatch(pathInputFolder, pathOutputFolder, FilenameProperties)
+function runWithSuccess = fcnDICOMImportBatch(pathInputFolder, pathOutputFolder, FilenameProperties, noGUI)
 
 %   TODO
 %   []  Change WorkingDirectory to a dynamic path
@@ -58,17 +58,23 @@ fclose(fout)
  jobfile = {'DICOMImportBatch_jobINTERMEDIATE.m'};
  spm('defaults', 'PET');
  
+ 
 %  %Open SPM GUI
-%  spm
+if ~exist('noGUI')
+    spm
+end
 %  
  %Run job
  spm_jobman('serial', jobfile);
  
 %  %Close SPM GUI again
-%  myfigures = get(groot,'children'); % Save handles of SPM windows
-%  handleOfMenu = find(endsWith({myfigures.Name},'Menu'));
-%  close(myfigures(handleOfMenu));
-%  
+if ~exist('noGUI')
+     myfigures = get(groot,'children'); % Save handles of SPM windows
+     handleOfMenu = find(endsWith({myfigures.Name},'Menu'));
+     close(myfigures(handleOfMenu));
+    
+end
+
  %if ~isempty(subj) > 0
     runWithSuccess = true;
  %end
