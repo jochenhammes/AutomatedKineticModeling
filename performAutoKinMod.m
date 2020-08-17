@@ -1,4 +1,4 @@
-function outputArg1 = performAutoKinMod(pathInputFolder, app, keepTempfiles,pathNormalDB)
+function outputArg1 = performAutoKinMod(pathInputFolder, app, keepTempfiles,FolderNameSetOfNormals)
 
 try
     app.ProtocolTextArea.Value = [{[datestr(datetime('now')) ' processing started']}, app.ProtocolTextArea.Value(:)'];
@@ -26,7 +26,7 @@ try
     app.ProtocolTextArea.Value = [{[datestr(datetime('now')) ' import DICOM']}, app.ProtocolTextArea.Value(:)'];
 end
 
-addpath('BatchDICOM_Import/');
+addpath('BatchDICOM_Import');
 
 foldersForInput = dir([pathInputFolder]);
 
@@ -46,7 +46,7 @@ try
     delete('DICOMImportBatch_jobINTERMEDIATE.m')
 end
 
-rmpath('BatchDICOM_Import/');
+rmpath('BatchDICOM_Import');
 
 % Move created nifti files to workdir
 
@@ -64,10 +64,10 @@ try
     app.ProtocolTextArea.Value = [{[datestr(datetime('now')) ' Movement Correction started']}, app.ProtocolTextArea.Value(:)'];
 end
 
-addpath('MovementCorrection/');
+addpath('MovementCorrection');
 fcnMovementCorrection([pathInputFolder 'workdir' filesep], 'noGUI');
 
-rmpath('MovementCorrection/');
+rmpath('MovementCorrection');
 
 %remove intermediate file from Movement Correction
 try
@@ -80,7 +80,7 @@ try
     app.ProtocolTextArea.Value = [{[datestr(datetime('now')) ' 4D Nifti conversion']}, app.ProtocolTextArea.Value(:)'];
 end
 
-addpath('ConvertTo4D/');
+addpath('ConvertTo4D');
 conversion4DSuccessful = fcnConvert4D([pathInputFolder 'workdir' filesep], 'movCor_*.nii', 'noGUI');
 
 if conversion4DSuccessful
@@ -89,7 +89,7 @@ if conversion4DSuccessful
     delete([pathInputFolder 'workdir' filesep 'movCor_*.nii']);
 end
 
-rmpath('ConvertTo4D/');
+rmpath('ConvertTo4D');
 
 %remove intermediate file from 4D Conversion 
 try
@@ -102,11 +102,11 @@ try
     app.ProtocolTextArea.Value = [{[datestr(datetime('now')) ' Set AC Origin ']}, app.ProtocolTextArea.Value(:)'];
 end
 
-addpath('SetACOrigin/');
+addpath('SetACOrigin');
 
 fcnSetACOrigin([pathInputFolder 'workdir' filesep], [pathInputFolder 'workdir' filesep], '4D*.nii');
 
-rmpath('SetACOrigin/');
+rmpath('SetACOrigin');
 
 
 %% Step 5: Normalize against perfusion template
@@ -115,11 +115,11 @@ try
     app.ProtocolTextArea.Value = [{[datestr(datetime('now')) ' Spatial normalization started']}, app.ProtocolTextArea.Value(:)'];
 end
 
-addpath('NormalizePerfusionPETbased/');
+addpath('NormalizePerfusionPETbased');
 
 fcnNormalizePerfusionPETbased([pathInputFolder 'workdir' filesep], 'noGUI');
 
-rmpath('NormalizePerfusionPETbased/');
+rmpath('NormalizePerfusionPETbased');
 
 %remove intermediate file from spatial normalization
 try
@@ -135,7 +135,7 @@ try
     app.ProtocolTextArea.Value = [{[datestr(datetime('now')) ' kinetic modeling started']}, app.ProtocolTextArea.Value(:)'];
 end
 
-addpath('autoQModeling/');
+addpath('autoQModeling');
 
 % clear qModeling input folder of nifti files
 delete(['autoQModeling' filesep 'workdir' filesep 'studies' filesep 'automatedCGN' filesep '*.nii']);
@@ -163,7 +163,28 @@ cd(oldfolder);
 movefile(['autoQModeling' filesep 'workdir' filesep 'results'], pathInputFolder);
 movefile([pathInputFolder filesep 'results'], [pathInputFolder filesep 'results_kinetic_modeling' filesep]);
 
-rmpath('autoQModeling/');
+rmpath('autoQModeling');
+
+
+%% Step 7: Create z transformed deviation map
+
+try
+    app.ProtocolTextArea.Value = [{[datestr(datetime('now')) ' Create z transformed deviation map']}, app.ProtocolTextArea.Value(:)'];
+end
+
+addpath('zTransformation');
+
+FolderNameSetOfNormals = 'PI2620_HC_Piramal';
+fcnZtransform([pathInputFolder 'results_kinetic_modeling' filesep],'*SRTM2_BPnd*', FolderNameSetOfNormals);
+
+rmpath('zTransformation');
+
+
+%% Finished 
+
+try
+    app.ProtocolTextArea.Value = [{[datestr(datetime('now')) ' done']}, app.ProtocolTextArea.Value(:)'];
+end
 
 end
 
