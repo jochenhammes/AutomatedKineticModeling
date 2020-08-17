@@ -126,6 +126,9 @@ try
     delete('normalizePerfusionBased_batch_INTERMEDIATE.m')
 end
 
+
+
+
 %% Step 6: Run qmodeling with the Normalized Dataset to
 
 try
@@ -158,7 +161,7 @@ cd(oldfolder);
 
 % move results files back to orginal directory and rename folder
 movefile(['autoQModeling' filesep 'workdir' filesep 'results'], pathInputFolder);
-movefile([pathInputFolder filesep 'results'], [pathInputFolder filesep 'results_kinetic_modeling']);
+movefile([pathInputFolder filesep 'results'], [pathInputFolder filesep 'results_kinetic_modeling' filesep]);
 
 rmpath('autoQModeling/');
 
