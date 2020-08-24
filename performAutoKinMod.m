@@ -180,6 +180,19 @@ fcnZtransform([pathInputFolder 'results_kinetic_modeling' filesep],'*SRTM2_BPnd*
 rmpath('zTransformation');
 
 
+%% Step 8: Skull stripping
+
+try
+    app.ProtocolTextArea.Value = [{[datestr(datetime('now')) ' Remove skull']}, app.ProtocolTextArea.Value(:)'];
+end
+
+addpath('skullStripping');
+
+fcnSkullStrip([pathInputFolder 'results_kinetic_modeling' filesep]);
+
+rmpath('skullStripping');
+
+
 %% Finished 
 
 try

@@ -21,6 +21,7 @@ for i = 1:length(imageToZTransform)
     zTransDevMap.img = (currentNii.img - meanNifti.img) ./ stDevNifti.img;
     %Set all Deviation Values > 10 to 10 to avoid too large numbers in the file
     zTransDevMap.img(zTransDevMap.img > 10) = 10; 
+    TransDevMap.img(zTransDevMap.img < -10) = -10; 
     save_nii(zTransDevMap, [inputFolder filesep 'zDev_' imageToZTransform(i).name]);
 end
 
