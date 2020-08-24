@@ -2,7 +2,7 @@ function runWithSuccess = fcnSkullStrip(inputFolder)
 
 runWithSuccess = false;
 
-pathBrainmask = dir(['skullStripping' filesep 'brainmask_0.70_79x95x78.nii']);
+pathBrainmask = dir(['skullStripping' filesep 'brainmask_0.90_79_95_78.nii']);
 brainMaskNifti = load_nii([pathBrainmask.folder filesep pathBrainmask.name]);
 
 imagesToSkullStrip = dir([inputFolder filesep '*.nii'])
