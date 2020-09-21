@@ -6,9 +6,7 @@ function runWithSuccess = fcnDICOMImportBatch(pathInputFolder, pathOutputFolder,
 
 runWithSuccess = false;
 
-%pathInputFolder = '/DATA/hammesj/PI2620_KinMod/Simsek/Simsek/PI2620_fulldyn/';
 pathOutputFolder = pathInputFolder;
-%pathOutputFolder = '/DATA/hammesj/Scripts/AutomatedKineticModeling/BatchDICOM_Import/workdir';
 
 %Append filesep to path, if missing
 if ~strcmp(pathInputFolder(end), filesep)

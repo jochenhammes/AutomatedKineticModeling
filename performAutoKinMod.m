@@ -1,5 +1,9 @@
 function outputArg1 = performAutoKinMod(pathInputFolder, app, keepTempfiles,FolderNameSetOfNormals)
 
+
+addpath('setup');
+
+
 try
     app.ProtocolTextArea.Value = [{[datestr(datetime('now')) ' processing started']}, app.ProtocolTextArea.Value(:)'];
 end
@@ -194,6 +198,8 @@ rmpath('skullStripping');
 
 
 %% Finished 
+
+rmpath('setup');
 
 try
     app.ProtocolTextArea.Value = [{[datestr(datetime('now')) ' done']}, app.ProtocolTextArea.Value(:)'];

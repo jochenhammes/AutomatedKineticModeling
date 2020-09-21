@@ -1,3 +1,4 @@
+run(localPathDefinition)
 %-----------------------------------------------------------------------
 % Job saved on 27-Jul-2020 11:47:13 by cfg_util (rev $Rev: 6460 $)
 % spm SPM - SPM12 (6470)

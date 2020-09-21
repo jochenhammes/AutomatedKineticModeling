@@ -1,3 +1,4 @@
+run('localPathDefinition.m')
 %-----------------------------------------------------------------------
 % Job saved on 27-Jul-2020 11:47:13 by cfg_util (rev $Rev: 6460 $)
 % spm SPM - SPM12 (6470)
@@ -10,7 +11,7 @@ matlabbatch{1}.spm.tools.oldnorm.estwrite.subj.resample = {
                                                            LIST_OUTPUT_FILES
                                                            };
 %%
-matlabbatch{1}.spm.tools.oldnorm.estwrite.eoptions.template = {'/DATA/shared/Templates_Nifti/SPM_Std_PET_Template.nii,1'};
+matlabbatch{1}.spm.tools.oldnorm.estwrite.eoptions.template = {[perfusionPETTemplate ',1']};
 matlabbatch{1}.spm.tools.oldnorm.estwrite.eoptions.weight = '';
 matlabbatch{1}.spm.tools.oldnorm.estwrite.eoptions.smosrc = 8;
 matlabbatch{1}.spm.tools.oldnorm.estwrite.eoptions.smoref = 0;

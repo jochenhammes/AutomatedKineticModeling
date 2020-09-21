@@ -2,8 +2,6 @@ function runWithSuccess = fcnSetACOrigin(pathInputFolder, pathOutputFolder, File
 
 runWithSuccess = false;
 
-%pathInputFolder = '/DATA/hammesj/Scripts/AutomatedKineticModeling/SetACOrigin/newtest/';
-%pathOutputFolder = '/DATA/hammesj/Scripts/AutomatedKineticModeling/SetACOrigin/workdir/';
 pathOutputFolder = pathInputFolder;
 
 %Select Files to be normalized, run recursively through all subfolders with **
