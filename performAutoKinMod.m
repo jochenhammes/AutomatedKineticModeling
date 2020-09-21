@@ -159,7 +159,9 @@ normalized4DNifti = dir([pathInputFolder 'workdir' filesep 'wAC*.nii']);
 copyfile([normalized4DNifti(1).folder filesep normalized4DNifti(1).name], ['autoQModeling' filesep 'workdir' filesep 'studies' filesep 'automatedCGN']);
 
 oldfolder = cd('autoQModeling');
-addpath('/DATA/SPM12/toolbox/QModeling/')
+
+run('localPathDefinition.m');
+addpath(path_qmodeling);
 autoQModelingCGN();
 cd(oldfolder);
 
@@ -167,7 +169,7 @@ cd(oldfolder);
 movefile(['autoQModeling' filesep 'workdir' filesep 'results'], pathInputFolder);
 movefile([pathInputFolder filesep 'results'], [pathInputFolder filesep 'results_kinetic_modeling' filesep]);
 
-rmpath('autoQModeling');
+rmpath(path_qmodeling);
 
 
 %% Step 7: Create z transformed deviation map
