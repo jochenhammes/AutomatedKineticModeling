@@ -1,4 +1,4 @@
-function runWithSuccess = fcnSetACOrigin(pathInputFolder, pathOutputFolder, FilenameProperties)
+function runWithSuccess = fcnSetACOrigin(pathInputFolder, pathOutputFolder, FilenameProperties, numberOfFramesToModel)
 
 runWithSuccess = false;
 
@@ -12,6 +12,11 @@ subj = dir([pathInputFolder FilenameProperties]);
 % load sample headers for PET and CT
 load('sampleCT_header.mat')
 load('samplePET_header.mat')
+
+% Adapt numberOfFramesToModel in PET header
+if exist('numberOfFramesToModel','var')
+    samplePET_header.hdr.dime.dim(5) = numberOfFramesToModel;
+end
 
 % load niftis, check if matrix is 512 (--> i.e. CT, otherwise PET), change
 % header and save back files

@@ -1,4 +1,4 @@
-function outputArg1 = performAutoKinMod(pathInputFolder, app, keepTempfiles,FolderNameSetOfNormals)
+function outputArg1 = performAutoKinMod(pathInputFolder, app, keepTempfiles,FolderNameSetOfNormals, numberOfFramesToModel)
 
 
 addpath('setup');
@@ -85,7 +85,10 @@ try
 end
 
 addpath('ConvertTo4D');
-conversion4DSuccessful = fcnConvert4D([pathInputFolder 'workdir' filesep], 'movCor_*.nii', 'noGUI');
+if ~exist('numberOfFramesToModel','var')
+    numberOfFramesToModel = 23;
+end
+conversion4DSuccessful = fcnConvert4D([pathInputFolder 'workdir' filesep], 'movCor_*.nii', numberOfFramesToModel, 'noGUI');
 
 if conversion4DSuccessful
     % delete non4D files
@@ -108,7 +111,7 @@ end
 
 addpath('SetACOrigin');
 
-fcnSetACOrigin([pathInputFolder 'workdir' filesep], [pathInputFolder 'workdir' filesep], '4D*.nii');
+fcnSetACOrigin([pathInputFolder 'workdir' filesep], [pathInputFolder 'workdir' filesep], '4D*.nii', numberOfFramesToModel);
 
 rmpath('SetACOrigin');
 

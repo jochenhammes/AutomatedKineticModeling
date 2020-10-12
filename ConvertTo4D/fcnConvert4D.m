@@ -1,4 +1,4 @@
-function runWithSuccess = fcnConvert4D(pathInputFolder, FilenameProperties, noGUI)
+function runWithSuccess = fcnConvert4D(pathInputFolder, FilenameProperties, numberOfFramesToModel, noGUI)
 
 runWithSuccess = false;
 
@@ -12,7 +12,11 @@ subj = dir([pathInputFolder FilenameProperties]);
 %prepare inputFileList
 inputFileList = '';
 
-for i=1:length(subj)
+if length(subj) < numberOfFramesToModel
+    numberOfFramesToModel = length(subj);
+end
+
+for i=1:numberOfFramesToModel
     inputFileList = [inputFileList '''' subj(i).folder filesep subj(i).name  '''' char(10)];
 end
 
