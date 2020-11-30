@@ -202,6 +202,17 @@ fcnSkullStrip([pathInputFolder 'results_kinetic_modeling' filesep]);
 rmpath('skullStripping');
 
 
+%% Step 9: Human readable Output as Png-image and dicom
+
+try
+    app.ProtocolTextArea.Value = [{[datestr(datetime('now')) ' Overview-Output Sheet']}, app.ProtocolTextArea.Value(:)'];
+end
+
+
+overlaySlices([pathInputFolder 'results_kinetic_modeling' filesep 'BET_zDev_automatedCGN_SRTM2_BPnd_image.nii'], [pathInputFolder 'results_kinetic_modeling' filesep 'BET_zDev_automatedCGN_SRTM2_BPnd_image.nii'], pathInputFolder, [pathInputFolder 'results_kinetic_modeling' filesep]);
+
+
+
 %% Finished 
 
 rmpath('setup');
