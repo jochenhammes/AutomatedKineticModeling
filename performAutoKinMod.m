@@ -15,6 +15,7 @@ performDICOMImport = true;
 performMovCor = true;
 performACOrig = true;
 performSpatialNorm = true;
+performSmooth = true;
 performKinMod = true;
 performZTrans = true;
 performReportOutput = true;
@@ -28,8 +29,9 @@ try
     performKinMod = app.chkKinMod.Value;
     performZTrans = app.chkZTrans.Value;
     performReportOutput = app.chkReportOutput.Value;
+    performSmooth = app.chkSmooth.Value;
     
-    disp(performDICOMImport);
+    disp(performSmooth);
 end
 
 
@@ -175,7 +177,27 @@ if performSpatialNorm
 end
 
 
-%% Step 6: Run qmodeling with the Normalized Dataset to
+%% Step 5.5 Smooth 4D image before Kinetic modeling
+
+if performSmooth
+    
+    try
+        app.ProtocolTextArea.Value = [{[datestr(datetime('now')) ' Smoothing']}, app.ProtocolTextArea.Value(:)'];
+    end
+    
+    addpath('Smoothing');
+    
+    fcnSmooth4D([pathInputFolder 'workdir' filesep], 'wACOrig_4D_movCor*nii');
+    
+    rmpath('Smoothing');
+    
+    %remove intermediate file from spatial normalization
+  
+    
+end
+
+
+%% Step 6: Run qmodeling with the Normalized Dataset to: Run qmodeling with the Normalized Dataset to
 
 if performKinMod
     
@@ -227,7 +249,11 @@ if performZTrans
     
     addpath('zTransformation');
     
-    FolderNameSetOfNormals = 'PI2620_HC_Piramal';
+    FolderNameSetOfNormals = 'PI2620_HC_Piramal_0-60';
+    try 
+        FolderNameSetOfNormals = app.NormalDatabaseDropDown.Value;
+    end
+    
     fcnZtransform([pathInputFolder 'results_kinetic_modeling' filesep],'*SRTM2_BPnd*', FolderNameSetOfNormals);
     
     rmpath('zTransformation');
