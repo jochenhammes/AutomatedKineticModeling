@@ -249,7 +249,11 @@ if performZTrans
     
     addpath('zTransformation');
     
-    FolderNameSetOfNormals = 'PI2620_HC_Piramal';
+    FolderNameSetOfNormals = 'PI2620_HC_Piramal_0-60';
+    try 
+        FolderNameSetOfNormals = app.NormalDatabaseDropDown.Value;
+    end
+    
     fcnZtransform([pathInputFolder 'results_kinetic_modeling' filesep],'*SRTM2_BPnd*', FolderNameSetOfNormals);
     
     rmpath('zTransformation');
