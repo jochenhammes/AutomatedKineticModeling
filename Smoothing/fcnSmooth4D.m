@@ -3,13 +3,12 @@ function runWithSuccess = fcnSmooth4D(pathInputFolder, FilenameProperties)
 runWithSuccess = false;
 
 
-%Select Files to be normalized, run recursively through all subfolders with **
+%Select Files
 clear subj;
-FilenameProperties = 'wACOrig_4D_movCor*nii';
+FilenameProperties = 'wACOrig_4D_movCor*nii'; %Remove this line, when FilenameProperties are provided as parameter in function call
 subj = dir([pathInputFolder FilenameProperties]);
 
 % load unsmoothed nifti
-
 myCurrentNifti = load_nii([subj(1).folder filesep subj(1).name]);
 smoothedNifti = myCurrentNifti;
 
